@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:15.1-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=greenlight
+    ports:
+      - 5432:5432
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+      - ENV=development
+      - VERSION=1.0.0
