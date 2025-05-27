@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -35,8 +36,9 @@ type application struct {
 func main() {
 	var cfg config
 
-	flag.IntVar(&cfg.port, "port", 4000, "API server port")
-	flag.StringVar(&cfg.env, "env", "development", "Environment (development|staging|production)")
+	port, _ := strconv.Atoi(os.Getenv("APP_PORT"))
+	flag.IntVar(&cfg.port, "port", port, "API server port")
+	flag.StringVar(&cfg.env, "env", os.Getenv("ENV"), "Environment (development|staging|production)")
 	flag.Parse()
 
 	logger := slog.New(slog.NewTextHandler(os.Stdout, nil))
