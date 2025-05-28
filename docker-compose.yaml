@@ -11,6 +11,11 @@ services:
       - ${DB_PORT}:${DB_PORT}
     expose:
       - ${DB_PORT}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   adminer:
     image: adminer
@@ -27,6 +32,17 @@ services:
     command: ./cmd/api
     environment:
       - APP_PORT=${APP_PORT}
+      - GREENLIGHT_DB_DSN=${GREENLIGHT_DB_DSN}
       - ENV=${ENV}
+      - PGHOST=postgres
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    develop:
+      watch:
+        - action: rebuild
+          path: ./cmd
+
+        - action: rebuild
+          path: ./internal
+

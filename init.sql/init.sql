@@ -1,3 +1,3 @@
 CREATE DATABASE greenlight;
-CREATE USER greenlight WITH PASSWORD 'test';
+CREATE USER greenlight WITH PASSWORD 'greenlight';
 CREATE EXTENSION IF NOT EXISTS citext;
