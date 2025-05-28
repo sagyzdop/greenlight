@@ -16,6 +16,17 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  
+  migrate:
+    image: migrate/migrate
+    volumes:
+        - ./migrations:/migrations
+    environment:
+      - GREENLIGHT_DB_DSN=${GREENLIGHT_DB_DSN}
+    command: ["-path", "/migrations", "-database",  "${GREENLIGHT_DB_DSN}", "up"]
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   adminer:
     image: adminer
