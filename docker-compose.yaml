@@ -47,6 +47,11 @@ services:
       - GREENLIGHT_DB_DSN=${GREENLIGHT_DB_DSN}
       - ENV=${ENV}
       - PGHOST=postgres
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=${SMTP_PORT}
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - SMTP_SENDER=${SMTP_SENDER}
     depends_on:
       postgres:
         condition: service_healthy
